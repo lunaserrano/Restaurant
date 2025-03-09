@@ -1,1 +1,52 @@
-<p>main-order works!</p>
+<p-fluid class="flex flex-col md:flex-row gap-8">
+    <div class=" mt-6 md:mt-0" style="height: calc(100vh - 12rem); width: 100%;">
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0">Mesas</p-tab>
+                <p-tab value="1">Barras</p-tab>
+                <p-tab value="2">Terraza</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <div class="grid gap-4 w-full" style="display: flex; flex-wrap: wrap;">
+                        <div *ngFor="let mesa of listMesas" class="col-12">
+                            <div class="card col-12 xs:col-12 md:col-4 lg:col-2 xl:col-4">
+                                <div class="flex justify-between mb-4">
+                                    <div>
+                                        <span class="block text-muted-color font-medium mb-4">{{ mesa.nombre }}</span>
+                                        <div class="mt-8">
+                                            <span class="text-primary font-medium">{{ mesa.acientos }}</span>
+                                            <span class="text-muted-color"> asientos</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border" 
+                                         style="width: 2.5rem; height: 2.5rem">
+                                        <i class="pi pi-table text-blue-500 !text-xl"></i>
+                                    </div>
+                                </div>
+                                <span class="text-primary font-medium">Mesa disponible</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    <p class="m-0">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non
+                        numquam eius modi.
+                    </p>
+                </p-tabpanel>
+                <p-tabpanel value="2">
+                    <p class="m-0">
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                        similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
+                        cumque nihil impedit quo minus.
+                    </p>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </div>
+</p-fluid>
+  
