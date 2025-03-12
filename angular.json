@@ -15,21 +15,19 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:application",
+                    "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "outputPath": "dist/sakai-ng",
                         "index": "src/index.html",
-                        "browser": "src/main.ts",
+                        "main": "src/main.ts",
                         "polyfills": [
                             "zone.js"
                         ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "public"
-                            }
+                            "src/favicon.ico",
+                            "src/assets"
                         ],
                         "styles": [
                             "src/styles.scss"
@@ -53,9 +51,12 @@
                             "outputHashing": "all"
                         },
                         "development": {
+                            "buildOptimizer": false,
                             "optimization": false,
+                            "vendorChunk": true,
                             "extractLicenses": false,
-                            "sourceMap": true
+                            "sourceMap": true,
+                            "namedChunks": true
                         }
                     },
                     "defaultConfiguration": "production"
@@ -73,7 +74,10 @@
                     "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n"
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "buildTarget": "sakai-ng:build"
+                    }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
@@ -83,12 +87,11 @@
                             "zone.js/testing"
                         ],
                         "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "public"
-                            }
+                            "src/favicon.ico",
+                            "src/assets"
                         ],
                         "styles": [
                             "src/styles.scss"
@@ -100,6 +103,6 @@
         }
     },
     "cli": {
-      "analytics": false
+      "analytics": "31fb1825-10d1-407a-82ec-bc5471bab70e"
     }
 }
