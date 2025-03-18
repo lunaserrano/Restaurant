@@ -1,0 +1,16 @@
+::ng-deep{
+.estado-active {
+    background-color: #b5e4c0;
+    border-radius: 5px;
+  }
+  
+  .estado-disabled {
+    background-color: #ffc2c7;
+    border-radius: 5px;
+  }
+
+  .mesa-ubicacion{
+    color: #011a52;
+    font-weight: bold;
+  }
+}

@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { OrdenesRoutingModule } from './ordenes-routing.module';
-
-
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+     // Mueve PedidosComponent aquí
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    OrdenesRoutingModule,
+    PedidosComponent,
+    TabViewModule
   ]
 })
 export class OrdenesModule { }

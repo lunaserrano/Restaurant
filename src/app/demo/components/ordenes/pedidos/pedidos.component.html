@@ -1,1 +1,38 @@
-<p>pedidos works!</p>
+<p-tabView>
+    <p-tabPanel header="Mesas">
+        <div class="grid">
+            <div *ngFor="let mesas of listMesas" class="col-12 lg:col-6 xl:col-3">
+                <div class="card mb-0">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <span class="block text-500 font-medium mb-3">Acientos</span>
+                            <div class="text-900 font-medium text-xl">{{mesas.acientos}}</div>
+                        </div>
+                        <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+                            <i class="pi pi-table text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex justify-content-between">
+                    <span [ngClass]="{'estado-active': mesas.estado === 'Disponible', 'estado-disabled': mesas.estado === 'Ocupada'}" class="font-medium p-2 rounded">{{ mesas.estado }}</span>
+                    <span class="block font-medium mb-3 mesa-ubicacion">Mesa {{mesas.ubicacion}}</span>
+                </div>
+                    <!-- <div class="flex justify-content-between">
+                        <button pButton type="button" label="Ver" icon="pi pi-eye" class="p-button-rounded p-button-text p-button-sm p-button-outlined"></button>
+                        <button pButton type="button" label="Editar" icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-sm p-button-outlined"></button>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Barras">
+        <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
+        </p>
+    </p-tabPanel>
+    <p-tabPanel header="Terraza">
+        <p>
+            At vero eos et accusamus et iusto odio dignissimos...
+        </p>
+    </p-tabPanel>
+</p-tabView>
