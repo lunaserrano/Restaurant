@@ -13,4 +13,18 @@
     color: #011a52;
     font-weight: bold;
   }
+  .relative-container {
+    position: relative;
+  }
+  
+  .btn-on-tabs {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem; 
+    z-index: 5; 
+  }
+  .p-dropdown {
+    width: 100%;
+}
+  
 }
