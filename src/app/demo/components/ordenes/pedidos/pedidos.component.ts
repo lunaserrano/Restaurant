@@ -12,6 +12,8 @@ export class PedidosComponent implements OnInit {
  // Modal control
  areaDialogVisible: boolean = false;
  mesaDialogVisible: boolean = false;
+ pedidoDialogVisible: boolean = false;
+ sidebarCategoriasVisible: boolean = false;
 
    // Formularios
    areaForm!: FormGroup;
@@ -63,6 +65,86 @@ export class PedidosComponent implements OnInit {
     }
   ];
 
+  ordenDialogVisible: boolean = false;
+  mesaSeleccionada: { area: string, mesa: string } | null = null;
+  
+  categorias = [
+    { nombre: 'Platos Fuertes', codigo: 'platos' },
+    { nombre: 'Bebidas', codigo: 'bebidas' },
+    { nombre: 'Postres', codigo: 'postres' }
+  ];
+  
+  productosCatalogo = {
+    platos: [
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+
+      { nombre: 'Lomo Saltado', descripcion: 'Carne con papas', precio: 25 },
+      { nombre: 'Arroz con Pollo', descripcion: 'Típico peruano', precio: 20 }
+    ],
+    bebidas: [
+      { nombre: 'Coca Cola', descripcion: 'Botella 500ml', precio: 5 },
+      { nombre: 'Jugo Natural', descripcion: 'Naranja o piña', precio: 7 }
+    ],
+    postres: [
+      { nombre: 'Torta de Chocolate', descripcion: 'Rebanada', precio: 10 },
+      { nombre: 'Helado', descripcion: '2 bolas', precio: 8 }
+    ]
+  };
+  
+  categoriaSeleccionada: any = null;
+  productosFiltrados: any[] = [];
+  ordenActual: any[] = [];
+  
+  // Abre el modal de orden
+  abrirOrden(area: string, mesa: string) {
+    this.mesaSeleccionada = { area, mesa };
+    this.ordenActual = [];
+    this.categoriaSeleccionada = this.categorias[0];
+    this.cargarProductos();
+    this.ordenDialogVisible = true;
+  }
+  
+  // Carga productos según la categoría seleccionada
+  cargarProductos() {
+    const codigo = this.categoriaSeleccionada?.codigo;
+    this.productosFiltrados = this.productosCatalogo[codigo] || [];
+  }
+  
+  // Agrega productos a la orden
+  agregarProducto(producto: any) {
+    const index = this.ordenActual.findIndex(p => p.nombre === producto.nombre);
+    if (index !== -1) {
+      this.ordenActual[index].cantidad += 1;
+    } else {
+      this.ordenActual.push({ ...producto, cantidad: 1 });
+    }
+  }
+  
+  // Confirma orden (aquí podrías enviarla al backend o lo que necesites)
+  confirmarOrden() {
+    console.log('Orden confirmada para:', this.mesaSeleccionada);
+    console.log(this.ordenActual);
+    this.ordenDialogVisible = false;
+  }
+  
+  calcularTotal(): number {
+    return this.ordenActual.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+  }
   openAreaDialog() {
     this.areaForm.reset();
     this.areaDialogVisible = true;
@@ -91,6 +173,31 @@ export class PedidosComponent implements OnInit {
     this.mesaDialogVisible = true;
   }
 
+  aumentarCantidad(item: any) {
+    const index = this.ordenActual.findIndex(p => p.nombre === item.nombre);
+    if (index !== -1) {
+      this.ordenActual[index].cantidad += 1;
+    }
+  }
+  
+  disminuirCantidad(item: any) {
+    const index = this.ordenActual.findIndex(p => p.nombre === item.nombre);
+    if (index !== -1) {
+      if (this.ordenActual[index].cantidad > 1) {
+        this.ordenActual[index].cantidad -= 1;
+      } else {
+        this.ordenActual.splice(index, 1);
+      }
+    }
+  }
+  
+  eliminarProductoCompleto(item: any) {
+    const index = this.ordenActual.findIndex(p => p.nombre === item.nombre);
+    if (index !== -1) {
+      this.ordenActual.splice(index, 1);
+    }
+  }
+  
   // 🔹 Guardar la mesa creada en el área seleccionada
   guardarMesa() {
     const nuevaMesa = {
@@ -102,5 +209,9 @@ export class PedidosComponent implements OnInit {
 
     this.listAreas[this.areaIndexSeleccionada].mesas.push(nuevaMesa);
     this.mesaDialogVisible = false;
+  }
+
+  openPedidoDialog() {
+    this.pedidoDialogVisible = true;
   }
 }

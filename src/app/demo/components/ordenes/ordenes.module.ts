@@ -31,6 +31,8 @@ import { SliderModule } from 'primeng/slider';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputDemoRoutingModule } from '../uikit/input/inputdemo-routing.module';
+import { TableModule } from 'primeng/table';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [PedidosComponent],
@@ -69,8 +71,9 @@ import { InputDemoRoutingModule } from '../uikit/input/inputdemo-routing.module'
      CheckboxModule,
      ButtonModule,
      InputGroupModule,
-     InputGroupAddonModule
-    
+     InputGroupAddonModule,
+     TableModule,
+     SidebarModule
   ]
 })
 export class OrdenesModule { }
