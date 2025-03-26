@@ -135,13 +135,6 @@ export class PedidosComponent implements OnInit {
     }
   }
   
-  // Confirma orden (aquí podrías enviarla al backend o lo que necesites)
-  confirmarOrden() {
-    console.log('Orden confirmada para:', this.mesaSeleccionada);
-    console.log(this.ordenActual);
-    this.ordenDialogVisible = false;
-  }
-  
   calcularTotal(): number {
     return this.ordenActual.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
   }
@@ -214,4 +207,25 @@ export class PedidosComponent implements OnInit {
   openPedidoDialog() {
     this.pedidoDialogVisible = true;
   }
+
+  confirmDialogVisible: boolean = false;
+
+// Abre el modal de confirmación
+confirmarOrden() {
+  this.confirmDialogVisible = true;
+}
+
+// Acción final después de confirmar
+finalizarOrden() {
+  // Aquí podrías enviar la orden al backend, guardar en historial, etc.
+  console.log('✅ Orden confirmada:', this.ordenActual);
+  console.log('Mesa:', this.mesaSeleccionada);
+
+  // Cierra los modales
+  this.confirmDialogVisible = false;
+  this.ordenDialogVisible = false;
+
+  // Limpia la orden actual (opcional)
+  this.ordenActual = [];
+}
 }
