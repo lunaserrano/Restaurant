@@ -119,16 +119,16 @@
         label="Categorías">
       </button>
   
-      <div class="orden-body-container flex flex-column lg:flex-row h-full gap-3">
+      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 flex flex-wrap h-full">
           <!-- Lado izquierdo: Categorías (solo visible en escritorio) -->
-          <div class="catalogo-lateral hidden lg:block w-2">
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-2 h-full">
               <p-listbox [options]="categorias" [(ngModel)]="categoriaSeleccionada" optionLabel="nombre"
                   (onChange)="cargarProductos()" styleClass="scrollable-listbox h-full">
               </p-listbox>
           </div>
   
           <!-- Productos y Detalle -->
-          <div class="w-full flex flex-column lg:flex-row gap-3 h-full">
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-10 flex flex-wrap h-full">
               <!-- Productos -->
               <div class="w-full lg:w-8 overflow-auto pr-3">
                   <div class="grid">

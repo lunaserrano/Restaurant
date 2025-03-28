@@ -30,7 +30,6 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SliderModule } from 'primeng/slider';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
-import { InputDemoRoutingModule } from '../uikit/input/inputdemo-routing.module';
 import { TableModule } from 'primeng/table';
 import { SidebarModule } from 'primeng/sidebar';
 
@@ -47,7 +46,6 @@ import { SidebarModule } from 'primeng/sidebar';
      ReactiveFormsModule,
      CommonModule,
      FormsModule,
-     InputDemoRoutingModule,
      AutoCompleteModule,
      CalendarModule,
      ChipsModule,
