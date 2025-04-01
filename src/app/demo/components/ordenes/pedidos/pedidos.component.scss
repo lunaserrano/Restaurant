@@ -1,102 +1,232 @@
-::ng-deep{
-.estado-active {
+::ng-deep {
+  .estado-active {
     background-color: #b5e4c0;
     border-radius: 5px;
   }
-  
+
   .estado-disabled {
     background-color: #ffc2c7;
     border-radius: 5px;
   }
 
-  .mesa-ubicacion{
+  .mesa-ubicacion {
     color: #011a52;
     font-weight: bold;
   }
+
   .relative-container {
     position: relative;
   }
-  
+
   .btn-on-tabs {
     position: absolute;
     top: 0.5rem;
-    right: 1rem; 
-    z-index: 5; 
+    right: 1rem;
+    z-index: 5;
   }
+
   .p-dropdown {
     width: 100%;
-}
+  }
 
-.estado-active {
-  background-color: #b5e4c0;
-  border-radius: 5px;
-}
+  .estado-active {
+    background-color: #b5e4c0;
+    border-radius: 5px;
+  }
 
-.estado-disabled {
-  background-color: #ffc2c7;
-  border-radius: 5px;
-}
+  .estado-disabled {
+    background-color: #ffc2c7;
+    border-radius: 5px;
+  }
 
-.text-green-500 {
-  color: #28a745; /* Ajusta el color según sea necesario */
-}
+  .text-green-500 {
+    color: #28a745;
+    /* Ajusta el color según sea necesario */
+  }
 
-.text-red-500 {
-  color: #dc3545; /* Ajusta el color según sea necesario */
-}
-  
-// estilo para las ordenes
-.orden-body-container {
-  display: flex;
-  height: calc(100% - 8rem); // Ajuste para margen y encabezado
-  gap: 1rem;
-}
+  .text-red-500 {
+    color: #dc3545;
+    /* Ajusta el color según sea necesario */
+  }
 
-.catalogo-lateral {
-  width: 20%;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  overflow: hidden;
-}
+  // estilo para las ordenes
+  .orden-body-container {
+    display: flex;
+    height: calc(100% - 8rem); // Ajuste para margen y encabezado
+    gap: 1rem;
+  }
 
-.scrollable-listbox {
-  height: 100%;
-  overflow-y: auto;
-}
+  .catalogo-lateral {
+    width: 20%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+  }
 
-.orden-main-content {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
+  .scrollable-listbox {
+    height: 100%;
+    overflow-y: auto;
+  }
 
-.producto-card {
-  background-color: #fff;
-  border-radius: 10px;
-  border: 1px solid #dcdcdc;
-  padding: 1rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.2s ease;
+  .orden-main-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
 
-  &:hover {
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
+  .producto-card {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    padding: 1rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+  }
+
+  .orden-detalle {
+    background-color: #f9f9f9;
+    border-left: 1px solid #ddd;
+    padding: 1rem;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .producto-card-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*dispositivo movil*/
+
+  .ocultar-en-movil {
+    display: none;
+  }
+
+  @media (min-width: 992px) {
+    .ocultar-en-movil {
+      display: block;
+    }
+  }
+
+  // /*tablet*/
+  @media (max-width: 1180px) {
+    .ocultar-fila {
+      display: none;
+    }
+  }
+
+  @media (max-width: 991px),
+  (max-height: 500px) {
+
+    .ocultar-fila,
+    .ismovil {
+      display: none;
+    }
+  }
+
+
+  /* Asegura que los botones y textos dentro de la tabla no se desborden */
+  .p-table td,
+  .p-table th {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  @media (max-width: 991px) {
+    .orden-detalle .text-right {
+      text-align: center !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+
+    .p-table td,
+    .p-table th {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .orden-detalle {
+      padding: 1rem !important;
+    }
+  }
+
+  /* En móviles: centramos el total y botones */
+  @media (max-width: 767px) {
+    .orden-detalle .text-right {
+      text-align: center !important;
+    }
+  }
+
+  /***************************************************************************************/
+  /***************************************************************************************/
+
+  /* ----------- Teléfonos pequeños (<576px) ----------- */
+@media (max-width: 575.98px) {
+  .mostrar-movil {
+    display: block !important;
+  }
+  .ocultar-movil {
+    display: none !important;
   }
 }
 
-.orden-detalle {
-  background-color: #f9f9f9;
-  border-left: 1px solid #ddd;
-  padding: 1rem;
-  height: 100%;
-  overflow-y: auto;
+/* ----------- Teléfonos grandes (≥576px) ----------- */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .mostrar-tel-grande {
+    display: block !important;
+  }
+  .ocultar-tel-grande {
+    display: none !important;
+  }
 }
 
-.producto-card-body {
-  display: flex;
-  flex-direction: column;
+/* ----------- Tablets (≥768px) ----------- */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .mostrar-tablet {
+    display: block !important;
+  }
+  .ocultar-tablet {
+    display: none !important;
+  }
 }
+
+/* ----------- Laptops (≥992px) ----------- */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .mostrar-laptop {
+    display: block !important;
+  }
+  .ocultar-laptop {
+    display: none !important;
+  }
+}
+
+/* ----------- Escritorio grande (≥1200px) ----------- */
+@media (min-width: 1200px) and (max-width: 1535.98px) {
+  .mostrar-desktop {
+    display: block !important;
+  }
+  .ocultar-desktop {
+    display: none !important;
+  }
+}
+
+/* ----------- Ultra-wide (≥1536px) ----------- */
+@media (min-width: 1536px) {
+  .mostrar-ultrawide {
+    display: block !important;
+  }
+  .ocultar-ultrawide {
+    display: none !important;
+  }
+}
+
 }

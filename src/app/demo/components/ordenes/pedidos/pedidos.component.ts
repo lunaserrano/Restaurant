@@ -1,5 +1,5 @@
 // Objectivo: Crear un componente para gestionar las áreas y mesas de un restaurante.
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -43,8 +43,15 @@ export class PedidosComponent implements OnInit {
     { label: 'Ocupada', value: 'Ocupada' }
   ];
  
+  esMovil: boolean = false;
+mostrarDetalle: boolean = false;
+
+@HostListener('window:resize', [])
+onResize() {
+  this.esMovil = window.innerWidth < 1200;
+}
   ngOnInit(){
-  
+    this.onResize();
   }
   
   listAreas = [
@@ -213,6 +220,7 @@ export class PedidosComponent implements OnInit {
 // Abre el modal de confirmación
 confirmarOrden() {
   this.confirmDialogVisible = true;
+  
 }
 
 // Acción final después de confirmar
@@ -220,6 +228,7 @@ finalizarOrden() {
   // Aquí podrías enviar la orden al backend, guardar en historial, etc.
   console.log('✅ Orden confirmada:', this.ordenActual);
   console.log('Mesa:', this.mesaSeleccionada);
+  this.mostrarDetalle = false;
 
   // Cierra los modales
   this.confirmDialogVisible = false;

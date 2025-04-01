@@ -32,9 +32,10 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { SidebarModule } from 'primeng/sidebar';
+import { MainOrdenesComponent } from './main-ordenes/main-ordenes.component';
 
 @NgModule({
-  declarations: [PedidosComponent],
+  declarations: [PedidosComponent, MainOrdenesComponent],
   imports: [
     CommonModule,
     OrdenesRoutingModule,

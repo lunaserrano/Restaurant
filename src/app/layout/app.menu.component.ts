@@ -17,7 +17,8 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Inicio',
                 items: [
-                    { label: 'Ordenar', icon: 'pi pi-fw pi-inbox', routerLink: ['/ordenes/pedidos'] }
+                    { label: 'Ordenar', icon: 'pi pi-fw pi-inbox', routerLink: ['/ordenes/pedidos'] },
+                    { label: 'Maestro ordenes', icon: 'pi pi-fw pi-inbox', routerLink: ['/ordenes/list-ordenes'] }
                 ]
             },
             // {
