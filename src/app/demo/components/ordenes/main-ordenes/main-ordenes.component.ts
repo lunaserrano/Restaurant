@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { OrdenParaPagar } from 'src/app/demo/api/ordenes/OrdenParaPagar';
 import { PagoCuentaSeparada, PagoCuentaUnida } from 'src/app/demo/api/ordenes/PagoCuentaUnida';
+import { ProductoOrden } from 'src/app/demo/api/ordenes/ProductoOrden';
+import { OrdenService } from 'src/app/layout/service/orden.service';
 
 @Component({
   selector: 'app-main-ordenes',
@@ -9,23 +12,7 @@ import { PagoCuentaSeparada, PagoCuentaUnida } from 'src/app/demo/api/ordenes/Pa
   styleUrl: './main-ordenes.component.scss'
 })
 export class MainOrdenesComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {
-   
-  }
-
-  orden: OrdenParaPagar = {
-    codigoOrden: 'ORD123',
-    area: 'mesa',
-    mesa: '5',
-    mesero: { id: 1, nombre: 'Juan' },
-    productos: [
-      { id: 1, nombre: 'Pizza', cantidad: 2, precio: 10 },
-      { id: 2, nombre: 'Refresco', cantidad: 3, precio: 3 }
-    ]
-  };
-
+  orden: OrdenParaPagar | any = null;
   tipoPago: 'cuentaUnida' | 'cuentasSeparadas' = 'cuentaUnida';
 
   metodosPago = [
@@ -42,11 +29,29 @@ export class MainOrdenesComponent implements OnInit {
 
   pagosSeparados: PagoCuentaSeparada[] = [];
 
+  constructor(
+    private route: ActivatedRoute,
+    private ordenService: OrdenService
+  ) {}
+
+  ngOnInit(): void {
+    const codigoOrden = this.route.snapshot.paramMap.get('codigoOrden');
+    if (codigoOrden) {
+      this.ordenService.obtenerOrdenPorCodigo(codigoOrden).subscribe((data) => {
+        if (data) {
+          this.orden = data;
+        } else {
+          alert('Orden no encontrada');
+        }
+      });
+    }
+  }
+
   calcularTotal(): number {
-    return this.orden.productos.reduce(
-      (sum, item) => sum + item.precio * item.cantidad,
+    return this.orden?.productos.reduce(
+      (sum: number, item: ProductoOrden) => sum + item.precio * item.cantidad,
       0
-    );
+    ) || 0;
   }
 
   agregarCliente() {

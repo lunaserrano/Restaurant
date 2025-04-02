@@ -1,106 +1,118 @@
 <div class="pago-container p-4">
-    <h2>Pago de Orden</h2>
-  
-    <div class="mb-3">
-      <strong>Orden:</strong> {{ orden.codigoOrden }}<br>
-      <strong>Área:</strong> {{ orden.area }}<br>
-      <strong>Mesa:</strong> {{ orden.mesa }}<br>
-      <strong>Mesero:</strong> {{ orden.mesero.nombre }}
+  <h2 class="text-2xl mb-4">Pago de Orden</h2>
+
+  <p-card class="mb-4" header="Detalles de la Orden">
+    <div class="flex flex-column gap-2">
+      <div><strong>Código:</strong> {{ orden.codigoOrden }}</div>
+      <div><strong>Área:</strong> {{ orden.area }}</div>
+      <div><strong>Mesa:</strong> {{ orden.mesa }}</div>
+      <div><strong>Mesero:</strong> {{ orden.mesero.nombre }}</div>
     </div>
-  
-    <p-table [value]="orden.productos" class="mb-4">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Subtotal</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-item>
-        <tr>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td>${{ item.precio }}</td>
-          <td>${{ item.precio * item.cantidad }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  
-    <div class="mb-4">
-      <strong>Total: ${{ calcularTotal() }}</strong>
-    </div>
-  
-    <div class="mb-3">
+  </p-card>
+
+  <p-table class="shadow-2 border-round surface-card mb-4" [value]="orden.productos">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>${{ item.precio }}</td>
+        <td>${{ item.precio * item.cantidad }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="mb-4 text-right text-xl font-bold">
+    Total: ${{ calcularTotal() }}
+  </div>
+
+  <p-card class="mb-4">
+    <div class="flex gap-3 align-items-center">
+      <strong class="mr-2">¿Cómo deseas pagar?</strong>
       <p-radioButton name="tipoPago" value="cuentaUnida" label="Cuenta Unida" [(ngModel)]="tipoPago"></p-radioButton>
       <p-radioButton name="tipoPago" value="cuentasSeparadas" label="Cuentas Separadas" [(ngModel)]="tipoPago"></p-radioButton>
     </div>
-  
-    <ng-container *ngIf="tipoPago === 'cuentaUnida'">
-      <div class="mb-3">
-        <p-dropdown [options]="metodosPago" [(ngModel)]="pagoUnico.metodo" placeholder="Selecciona el método de pago"></p-dropdown>
-      </div>
-  
-      <div *ngIf="pagoUnico.metodo === 'efectivo'">
-        <span class="p-float-label mb-2">
-          <input type="number" pInputText [(ngModel)]="pagoUnico.montoRecibido" id="montoRecibido" />
-          <label for="montoRecibido">Monto Recibido</label>
-        </span>
-        <p *ngIf="pagoUnico.montoRecibido >= calcularTotal()">
-          <strong>Cambio: ${{ pagoUnico.montoRecibido - calcularTotal() }}</strong>
-        </p>
-      </div>
-  
-      <div *ngIf="pagoUnico.metodo === 'mixto'">
-        <span class="p-float-label mb-2">
-          <input type="number" pInputText [(ngModel)]="pagoUnico.detalleMixto.efectivo" id="efectivoMixto" />
-          <label for="efectivoMixto">Efectivo</label>
-        </span>
-        <span class="p-float-label">
-          <input type="number" pInputText [(ngModel)]="pagoUnico.detalleMixto.tarjeta" id="tarjetaMixto" />
-          <label for="tarjetaMixto">Tarjeta</label>
-        </span>
-      </div>
-    </ng-container>
-  
-    <ng-container *ngIf="tipoPago === 'cuentasSeparadas'">
-      <div *ngFor="let cliente of pagosSeparados; let i = index" class="card p-3 mb-3">
-        <h5>Cliente {{ i + 1 }}</h5>
-        <span class="p-float-label mb-2">
-          <input type="text" pInputText [(ngModel)]="cliente.nombreCliente" id="cliente{{i}}" />
-          <label for="cliente{{i}}">Nombre del Cliente</label>
-        </span>
-  
-        <p-multiSelect [options]="orden.productos" optionLabel="nombre" display="chip" [(ngModel)]="cliente.productos"></p-multiSelect>
-  
-        <p-dropdown [options]="metodosPago" [(ngModel)]="cliente.metodo" placeholder="Método de Pago"></p-dropdown>
-  
-        <div *ngIf="cliente.metodo === 'efectivo'">
-          <span class="p-float-label mt-2">
-            <input type="number" pInputText [(ngModel)]="cliente.montoRecibido" id="montoRecibido{{i}}" />
-            <label for="montoRecibido{{i}}">Monto Recibido</label>
-          </span>
-          <p>
-            <strong>Cambio: ${{ calcularCambioCliente(cliente) }}</strong>
-          </p>
-        </div>
-  
-        <div *ngIf="cliente.metodo === 'mixto'">
-          <span class="p-float-label mt-2">
-            <input type="number" pInputText [(ngModel)]="cliente.detalleMixto.efectivo" id="efectivo{{i}}" />
-            <label for="efectivo{{i}}">Efectivo</label>
-          </span>
-          <span class="p-float-label mt-2">
-            <input type="number" pInputText [(ngModel)]="cliente.detalleMixto.tarjeta" id="tarjeta{{i}}" />
-            <label for="tarjeta{{i}}">Tarjeta</label>
-          </span>
-        </div>
-      </div>
-      <button pButton label="Agregar Cliente" icon="pi pi-user-plus" (click)="agregarCliente()"></button>
-    </ng-container>
-  
-    <div class="mt-4 text-right">
-      <button pButton label="Confirmar Pago" icon="pi pi-check" (click)="confirmarPago()"></button>
+  </p-card>
+
+  <ng-container *ngIf="tipoPago === 'cuentaUnida'">
+    <div class="mb-3 pt-4">
+      <p-dropdown class="w-full" [options]="metodosPago" [(ngModel)]="pagoUnico.metodo" placeholder="Selecciona el método de pago"></p-dropdown>
     </div>
+
+    <div *ngIf="pagoUnico.metodo === 'efectivo'" class="mb-3 pt-4">
+      <span class="p-float-label w-full">
+        <input type="number" pInputText [(ngModel)]="pagoUnico.montoRecibido" id="montoRecibido" class="w-full" />
+        <label for="montoRecibido">Monto Recibido</label>
+      </span>
+      <p *ngIf="pagoUnico.montoRecibido >= calcularTotal()" class="mt-2">
+        <strong>Cambio: ${{ pagoUnico.montoRecibido - calcularTotal() }}</strong>
+      </p>
+    </div>
+
+    <div *ngIf="pagoUnico.metodo === 'mixto'" class="grid gap-3">
+      <span class="p-float-label col-12 md:col-6">
+        <input type="number" pInputText [(ngModel)]="pagoUnico.detalleMixto.efectivo" id="efectivoMixto" class="w-full" />
+        <label for="efectivoMixto">Efectivo</label>
+      </span>
+      <span class="p-float-label col-12 md:col-6">
+        <input type="number" pInputText [(ngModel)]="pagoUnico.detalleMixto.tarjeta" id="tarjetaMixto" class="w-full" />
+        <label for="tarjetaMixto">Tarjeta</label>
+      </span>
+    </div>
+  </ng-container>
+
+  <section *ngIf="tipoPago === 'cuentasSeparadas'">
+    <div class="gap-4 mb-4 col-12 flex flex-wrap">
+      <div *ngFor="let cliente of pagosSeparados; let i = index" class="col-12 md:col-12 sm:col-12 lg:col-12">
+        <p-card [header]="'Cliente ' + (i + 1)" class="shadow-2 border-round surface-card">
+          <button type="button" pButton icon="pi pi-times" class="p-button-rounded p-button-danger p-button-sm absolute top-0 right-0 m-2" (click)="eliminarCliente(i)" pTooltip="Eliminar cliente"></button>
+
+          <div class="p-fluid">
+            <span class="p-float-label mb-3 pt-4">
+              <input type="text" pInputText [(ngModel)]="cliente.nombreCliente" id="cliente{{i}}" class="w-full" />
+              <label for="cliente{{i}}">Nombre del Cliente</label>
+            </span>
+            <div class="mb-3 pt-4">
+              <p-multiSelect class="mb-3 w-full" [options]="orden.productos" optionLabel="nombre" display="chip" placeholder="Productos" [(ngModel)]="cliente.productos"></p-multiSelect>
+            </div>
+            <div class="mb-3 pt-4">
+              <p-dropdown class="mb-3 w-full" [options]="metodosPago" [(ngModel)]="cliente.metodo" placeholder="Método de Pago"></p-dropdown>
+            </div>
+            
+            <div class="mb-3 pt-4" *ngIf="cliente.metodo === 'efectivo'">
+              <span class="p-float-label mb-2">
+                <input type="number" pInputText [(ngModel)]="cliente.montoRecibido" id="montoRecibido{{i}}" class="w-full" />
+                <label for="montoRecibido{{i}}">Monto Recibido</label>
+              </span>
+              <p><strong>Cambio: ${{ calcularCambioCliente(cliente) }}</strong></p>
+            </div>
+
+            <div *ngIf="cliente.metodo === 'mixto'" class="grid gap-3">
+              <span class="p-float-label col-12 md:col-6">
+                <input type="number" pInputText [(ngModel)]="cliente.detalleMixto.efectivo" id="efectivo{{i}}" class="w-full" />
+                <label for="efectivo{{i}}">Efectivo</label>
+              </span>
+              <span class="p-float-label col-12 md:col-6">
+                <input type="number" pInputText [(ngModel)]="cliente.detalleMixto.tarjeta" id="tarjeta{{i}}" class="w-full" />
+                <label for="tarjeta{{i}}">Tarjeta</label>
+              </span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <button pButton label="Agregar Cliente" icon="pi pi-user-plus" (click)="agregarCliente()"></button>
+  </section>
+
+  <div class="mt-4 flex justify-content-end gap-2">
+    <button pButton label="Confirmar Pago" icon="pi pi-check" class="p-button-success" (click)="confirmarPago()"></button>
   </div>
-  
+</div>

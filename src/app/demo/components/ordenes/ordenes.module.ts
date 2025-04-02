@@ -33,9 +33,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { SidebarModule } from 'primeng/sidebar';
 import { MainOrdenesComponent } from './main-ordenes/main-ordenes.component';
+import { PagosComponent } from './pagos/pagos.component';
+import { CardModule } from 'primeng/card';
+
 
 @NgModule({
-  declarations: [PedidosComponent, MainOrdenesComponent],
+  declarations: [PedidosComponent, MainOrdenesComponent, PagosComponent],
   imports: [
     CommonModule,
     OrdenesRoutingModule,
@@ -72,7 +75,8 @@ import { MainOrdenesComponent } from './main-ordenes/main-ordenes.component';
      InputGroupModule,
      InputGroupAddonModule,
      TableModule,
-     SidebarModule
+     SidebarModule,
+     CardModule
   ]
 })
 export class OrdenesModule { }
