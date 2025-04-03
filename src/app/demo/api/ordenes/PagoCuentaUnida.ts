@@ -20,4 +20,10 @@ export interface PagoCuentaSeparada {
     efectivo: number;
     tarjeta: number;
   };
+  tarjeta?: {
+    numero: string;
+    vencimiento: string;
+    cvv: string;
+    titular: string;
+  };
 }

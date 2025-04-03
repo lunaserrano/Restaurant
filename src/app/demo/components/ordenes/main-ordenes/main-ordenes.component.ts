@@ -13,6 +13,7 @@ import { OrdenService } from 'src/app/layout/service/orden.service';
 })
 export class MainOrdenesComponent implements OnInit {
   orden: OrdenParaPagar | any = null;
+  productosSeleccionados: ProductoOrden[] = [];
   tipoPago: 'cuentaUnida' | 'cuentasSeparadas' = 'cuentaUnida';
 
   metodosPago = [
@@ -55,12 +56,15 @@ export class MainOrdenesComponent implements OnInit {
   }
 
   agregarCliente() {
+    const nuevosProductos = [...this.productosSeleccionados];
+  
     this.pagosSeparados.push({
       nombreCliente: '',
-      productos: [],
+      productos: nuevosProductos,
       metodo: 'efectivo',
       montoRecibido: 0,
-      detalleMixto: { efectivo: 0, tarjeta: 0 }
+      detalleMixto: { efectivo: 0, tarjeta: 0 },
+      tarjeta: { numero: '', vencimiento: '', cvv: '', titular: '' }
     });
   }
 
@@ -116,6 +120,8 @@ export class MainOrdenesComponent implements OnInit {
         alert('La suma de los pagos separados no cubre el total de la orden');
         return;
       }
+      const pagados = this.pagosSeparados.flatMap(cliente => cliente.productos.map(p => p.id));
+      this.orden.productos = this.orden.productos.filter(p => !pagados.includes(p.id));
 
       console.log('Pago cuentas separadas:', {
         orden: this.orden,
